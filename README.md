@@ -14,6 +14,14 @@ It allows egui applications to switch between Latte, Frappé, Macchiato, and Moc
 * Builder pattern for clean, fluent configuration
 * Runs on Linux, Mac, Windows, WebAssembly (wasm) and Raspberry Pi
 
+## Live wasm demo app
+
+The wasm [demo app](https://dreamy-meringue-f98d25.netlify.app/) runs in your web browser.
+
+## Screenshots
+![Texicon screenshot 1](https://raw.githubusercontent.com/White-Rabbit-Scientific/egui-widget-texicon/main/images/Screenshot1.png)
+![Texicon screenshot 2](https://raw.githubusercontent.com/White-Rabbit-Scientific/egui-widget-texicon/main/images/Screenshot2.png)
+
 ## Quick Start
 Apply a theme at startup or at any time:
 ```toml
@@ -24,11 +32,6 @@ The theme automatically:
 * Applies all Catppuccin colors
 * Switches egui between light and dark mode
 * Stores the active theme in egui context memory
-
-## Screenshots
-
-![Texicon screenshot 1](https://raw.githubusercontent.com/White-Rabbit-Scientific/egui-widget-texicon/main/images/Screenshot1.png)
-![Texicon screenshot 2](https://raw.githubusercontent.com/White-Rabbit-Scientific/egui-widget-texicon/main/images/Screenshot2.png)
 
 ## Theme Selector Widget
 * Add a simple runtime theme switcher to your UI:
