@@ -26,10 +26,6 @@ The theme automatically:
 * Stores the active theme in egui context memory
 
 ## Screenshots
-Screenshots are best viewed on GitHub.
-They also render correctly on crates.io using raw image URLs.
-
-## Screenshots
 
 ![Texicon screenshot 1](https://raw.githubusercontent.com/White-Rabbit-Scientific/egui-widget-texicon/main/images/Screenshot1.png)
 ![Texicon screenshot 2](https://raw.githubusercontent.com/White-Rabbit-Scientific/egui-widget-texicon/main/images/Screenshot2.png)
