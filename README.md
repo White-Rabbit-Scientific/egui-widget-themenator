@@ -1,4 +1,4 @@
-# egui-widget-themenator — themes and theme switcher for egui
+# Themenator — themes and theme switcher for egui
 
 *egui-widget-themenator* provides Catppuccin color palettes for ready-made themes, packaged as a widget for [egui](https://github.com/emilk/egui).
 
@@ -29,7 +29,10 @@ The theme automatically:
 Screenshots are best viewed on GitHub.
 They also render correctly on crates.io using raw image URLs.
 
-![egui-widget-themenator](https://raw.githubusercontent.com/yourusername/egui-themes/main/screenshots/egui-widget-themenator.png)
+## Screenshots
+
+![Texicon screenshot 1](https://raw.githubusercontent.com/White-Rabbit-Scientific/egui-widget-texicon/main/images/Screenshot1.png)
+![Texicon screenshot 2](https://raw.githubusercontent.com/White-Rabbit-Scientific/egui-widget-texicon/main/images/Screenshot2.png)
 
 ## Theme Selector Widget
 * Add a simple runtime theme switcher to your UI:
