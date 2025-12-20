@@ -1,6 +1,6 @@
 # Themenator — themes and theme switcher for egui
 
-*egui-widget-themenator* provides Catppuccin color palettes for ready-made themes, packaged as a widget for [egui](https://github.com/emilk/egui).
+*egui-widget-themenator* provides [Catppuccin](https://catppuccin.com/) color palettes for ready-made themes, packaged as a widget for [egui](https://github.com/emilk/egui).
 
 It allows egui applications to switch between Latte, Frappé, Macchiato, and Mocha at runtime, with the selected theme automatically persisted across app restarts.
 
@@ -10,9 +10,9 @@ It allows egui applications to switch between Latte, Frappé, Macchiato, and Moc
 * Correct light / dark base theme handling
 * Runtime theme switching
 * Persistent theme storage across app restarts
-* Low-overhead non-persistent storage while running
-* Optional theme selector widget
-* Works on desktop and WebAssembly (wasm)
+* Theme selector buttons
+* Builder pattern for clean, fluent configuration
+* Runs on Linux, Mac, Windows, WebAssembly (wasm) and Raspberry Pi
 
 ## Quick Start
 Apply a theme at startup or at any time:
