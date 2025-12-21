@@ -24,58 +24,27 @@ The wasm [demo app](https://dreamy-meringue-f98d25.netlify.app/) runs in your we
 ![Texicon screenshot 3](https://raw.githubusercontent.com/White-Rabbit-Scientific/egui-widget-texicon/main/images/Screenshot3.png)
 
 ## Quick Start
-Apply a theme at startup or at any time:
+
+Add ```egui-widget-themenator``` as a dependency in your Cargo.toml file:
 ```toml
-use egui_widget_themenator::ThemeName;
-ThemeName::Mocha.set(ctx);
+[dependencies]
+egui_widget_themenator = 0.2
 ```
+
+Add the theme widget:
+```rust
+ui.add(
+    egui_widget_themenator::ThemeWidget::new()
+        .label("Theme:")
+        .show_labels(false),
+);
+```
+
 The theme automatically:
-* Applies all Catppuccin colors
-* Switches egui between light and dark mode
-* Stores the active theme in egui context memory
-
-## Theme Selector Widget
-* Add a simple runtime theme switcher to your UI:
-```rust
-use egui_widget_themenator::{ThemeName, ThemeWidget};
-ThemeWidget::new().show(ctx);
-```
-With a label:
-```rust
-ui.add(
-    ThemeWidget::new()
-        .label("Theme")
-);
-```
-Hide labels for compact layouts:
-```rust
-ui.add(
-    ThemeWidget::new()
-        .show_labels(false)
-);
-```
-The widget:
-* Highlights the active theme
-* Updates egui styling immediately
-* Persists the selected theme automatically
-
-## Using the Palette Directly
-Each Catppuccin palette is exposed as strongly-typed Color32 values and can be used directly in custom widgets:
-
-```rust
-use egui::Color32;
-use egui_themenator::CatppuccinColors;
-
-let palette = Color32::mocha();
-let accent = palette.mauve;
-```
-## How It Works
-* Catppuccin palettes are defined as Color32 values
-* Themes map palette colors to egui Style and Visuals
-* Non-persistent storage is used while running for lower CPU overhead
-* Persistent storage saves the selected theme across restarts
-* The widget synchronizes style and storage automatically
-* No manual state management is required.
+* Add buttons for each theme
+* Applies all Catppuccin color styling
+* Switches between light and dark mode
+* Persists the selected theme across restarts
 
 ## Platform Support
 * Linux

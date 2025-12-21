@@ -3,9 +3,9 @@ name = "egui_widget_themenator"
 version = "0.2.0"
 edition = "2021"
 rust-version = "1.92"
-description = "An egui themes crate"
-keywords = ["egui", "eframe", "ui", "theme"]
-categories = ["gui", "graphics", "rendering", "colors"]
+description = "An egui Catppuccin theme-widget crate"
+keywords = ["egui", "eframe", "ui", "theme", "widget"]
+categories = ["gui", "graphics", "rendering", "colors", "widget"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/white-rabbit-scientific/egui-widget-themenator"
 documentation = "https://docs.rs/egui-widget-themenator"
@@ -15,7 +15,6 @@ homepage = "https://github.com/white-rabbit-scientific/egui-widget-themenator"
 exclude = [
     ".github/",
     ".gitignore",
-    "images/",
 ]
 
 [dependencies]

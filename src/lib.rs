@@ -6,11 +6,9 @@ use egui::{
 use serde::{Deserialize, Serialize};
 // use std::time::Duration; // TODO cursor flashing
 
-// ---------------------------------
-// Extended Catppuccin Color Palette
-// ---------------------------------
-
+// ----------------------------------------------------------
 // Extension trait to add Catppuccin colors to egui's Color32
+// ----------------------------------------------------------
 #[rustfmt::skip]
 pub trait CatppuccinColors {
     fn latte() ->     CatppuccinPalette;
@@ -19,6 +17,9 @@ pub trait CatppuccinColors {
     fn mocha() ->     CatppuccinPalette;
 }
 
+// ---------------------------------
+// Extended Catppuccin Color Palette
+// ---------------------------------
 #[rustfmt::skip]
 #[derive(Clone, Copy, Debug)]
 pub struct CatppuccinPalette {
@@ -51,6 +52,9 @@ pub struct CatppuccinPalette {
 }
 
 #[rustfmt::skip]
+// ---------------------------
+// Implement trait for Color32
+// ---------------------------
 impl CatppuccinColors for Color32 {
     fn latte() -> CatppuccinPalette {
         CatppuccinPalette {
@@ -83,8 +87,8 @@ impl CatppuccinColors for Color32 {
         }
     }
 
-#[rustfmt::skip]
-fn frappe() -> CatppuccinPalette {
+    #[rustfmt::skip]
+    fn frappe() -> CatppuccinPalette {
         CatppuccinPalette {
             rosewater: Color32::from_rgb(0xF2, 0xD5, 0xCF),
             flamingo:  Color32::from_rgb(0xEE, 0xBE, 0xBE),
@@ -115,8 +119,8 @@ fn frappe() -> CatppuccinPalette {
         }
     }
 
-#[rustfmt::skip]
-fn macchiato() -> CatppuccinPalette {
+    #[rustfmt::skip]
+    fn macchiato() -> CatppuccinPalette {
         CatppuccinPalette {
             rosewater: Color32::from_rgb(0xF4, 0xDB, 0xD6),
             flamingo:  Color32::from_rgb(0xF0, 0xC6, 0xC6),
@@ -147,8 +151,8 @@ fn macchiato() -> CatppuccinPalette {
         }
     }
 
-#[rustfmt::skip]
-fn mocha() -> CatppuccinPalette {
+    #[rustfmt::skip]
+    fn mocha() -> CatppuccinPalette {
         CatppuccinPalette {
             rosewater: Color32::from_rgb(0xF5, 0xE0, 0xDC),
             flamingo:  Color32::from_rgb(0xF2, 0xCD, 0xCD),
@@ -192,11 +196,17 @@ pub enum ThemeName {
 }
 
 impl ThemeName {
+    // ------------------------------
+    // Return theme's light/dark mode
+    // ------------------------------
     pub fn is_dark(&self) -> bool {
         !matches!(self, ThemeName::Latte)
     }
 
     #[rustfmt::skip]
+    // ----------------------------------------------
+    // Call trait's associated method through Color32
+    // ----------------------------------------------
     pub fn palette(&self) -> CatppuccinPalette {
         match self {
             ThemeName::Latte =>     Color32::latte(),
@@ -211,13 +221,17 @@ impl ThemeName {
         apply_catppuccin_theme(style, self.is_dark(), palette);
     }
 
-    /// Get the currently active Catppuccin theme from context
+    // ------------------------------------------------------
+    // Get the currently active Catppuccin theme from context
+    // ------------------------------------------------------
     pub fn current(ctx: &egui::Context) -> Self {
         ctx.data(|d| d.get_temp(egui::Id::new("catppuccin_theme")))
             .unwrap_or_default()
     }
 
-    /// Set the current theme in both egui and context memory
+    // -----------------------------------------------------
+    // Set the current theme in both egui and context memory
+    // -----------------------------------------------------
     pub fn set(self, ctx: &egui::Context) {
         let base_theme = if self.is_dark() {
             egui::Theme::Dark
@@ -230,7 +244,9 @@ impl ThemeName {
         });
         ctx.set_theme(base_theme);
 
+        // ------------------------------
         // Store in context for retrieval
+        // ------------------------------
         ctx.data_mut(|d| d.insert_temp(egui::Id::new("catppuccin_theme"), self));
     }
 
@@ -255,7 +271,9 @@ impl ThemeName {
     }
 }
 
-// === Theme Application ===
+// -----------------
+// Theme Application
+// -----------------
 fn apply_catppuccin_theme(style: &mut Style, dark_mode: bool, p: CatppuccinPalette) {
     const CORNER_RADIUS: u8 = 0;
 
@@ -408,7 +426,9 @@ impl Widget for ThemeWidget {
                 .data_mut(|d| d.get_persisted::<PersistedStorage>(persisted_id))
                 .unwrap_or_default();
 
+            // ----------------------
             // Populate struct fields
+            // ----------------------
             non_persisted_storage.run_once = true;
             non_persisted_storage.theme_name = persisted_storage.theme_name;
 
@@ -418,7 +438,9 @@ impl Widget for ThemeWidget {
             ui.ctx()
                 .data_mut(|d| d.insert_temp(non_persisted_id, non_persisted_storage));
 
-            // Update theme
+            // ----------------------------
+            // Update non-persisted storage
+            // ----------------------------
             non_persisted_storage.theme_name.set(ui.ctx());
         };
 
@@ -429,42 +451,86 @@ impl Widget for ThemeWidget {
             if let Some(label) = self.label {
                 ui.label(label);
             }
+            // Get the system theme
+            // let system_theme = ui.ctx().input(|i| i.raw.system_theme);
+            // System theme icon
+            // ui.label("\u{1F4BB}")
 
-            // -----------------
-            // For each theme...
-            // -----------------
-            for &theme in ThemeName::all() {
-                let button_text = theme.theme_lbl_txt().to_string();
-
-                // ----------------------------------
-                // Highlight only the selected button
-                // ----------------------------------
-                if ui
-                    .selectable_label(non_persisted_storage.theme_name == theme, button_text)
-                    .clicked()
-                {
-                    // ------------
-                    // Update theme
-                    // ------------
-                    theme.set(ui.ctx());
-
-                    // ---------------------------------------------------
-                    // Save current theme to egui's non-persistent storage
-                    // ---------------------------------------------------
-                    let nps = NonPersistedStorage {
-                        theme_name: theme,
-                        run_once: true,
-                    };
-                    ui.ctx().data_mut(|d| d.insert_temp(non_persisted_id, nps));
-
-                    // --------------------------------------------------------------------------
-                    // Update non-persistent storage only when theme changed (a little expensive)
-                    // --------------------------------------------------------------------------
-                    let persisted_id = Id::new(ID_THEME_NAME);
-                    ui.ctx().data_mut(|d| {
-                        d.insert_persisted(persisted_id, PersistedStorage { theme_name: theme })
-                    });
+            let next_state;
+            //---------------------------------------------------------------------
+            // Display current state and get its response, returning the next state
+            // --------------------------------------------------------------------
+            let resp = match non_persisted_storage.theme_name {
+                ThemeName::Latte => {
+                    next_state = ThemeName::Frappe;
+                    ui.label("\u{2600}")
+                        .on_hover_text("Latte theme")
+                        .on_hover_cursor(egui::CursorIcon::PointingHand)
                 }
+                ThemeName::Frappe => {
+                    next_state = ThemeName::Macchiato;
+                    ui.label("\u{1F319}")
+                        .on_hover_text("Frappe theme")
+                        .on_hover_cursor(egui::CursorIcon::PointingHand)
+                }
+                ThemeName::Macchiato => {
+                    next_state = ThemeName::Mocha;
+                    ui.label("\u{1F319}")
+                        .on_hover_text("Macchiato theme")
+                        .on_hover_cursor(egui::CursorIcon::PointingHand)
+                }
+                ThemeName::Mocha => {
+                    next_state = ThemeName::Latte;
+                    ui.label("\u{1F319}")
+                        .on_hover_text("Mocha theme")
+                        .on_hover_cursor(egui::CursorIcon::PointingHand)
+                }
+            };
+
+            //-------------------------------
+            // If clicked, move to next state
+            // ------------------------------
+            if resp.clicked() {
+                non_persisted_storage.theme_name = next_state;
+
+                //---------------------------------
+                // Update egui to use the new theme
+                // --------------------------------
+                match non_persisted_storage.theme_name {
+                    ThemeName::Latte => {
+                        ThemeName::Latte.set(ui.ctx());
+                    }
+                    ThemeName::Frappe => {
+                        ThemeName::Frappe.set(ui.ctx());
+                    }
+                    ThemeName::Macchiato => {
+                        ThemeName::Macchiato.set(ui.ctx());
+                    }
+                    ThemeName::Mocha => {
+                        ThemeName::Mocha.set(ui.ctx());
+                    }
+                };
+                // ---------------------------------------------------
+                // Save current theme to egui's non-persistent storage
+                // ---------------------------------------------------
+                let nps = NonPersistedStorage {
+                    theme_name: next_state,
+                    run_once: true,
+                };
+                ui.ctx().data_mut(|d| d.insert_temp(non_persisted_id, nps));
+
+                // --------------------------------------------------------------------------
+                // Update non-persistent storage only when theme changed (a little expensive)
+                // --------------------------------------------------------------------------
+                let persisted_id = Id::new(ID_THEME_NAME);
+                ui.ctx().data_mut(|d| {
+                    d.insert_persisted(
+                        persisted_id,
+                        PersistedStorage {
+                            theme_name: next_state,
+                        },
+                    )
+                });
             }
         })
         .response
