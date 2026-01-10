@@ -33,16 +33,14 @@ egui_widget_themenator = 0.2
 
 Add the theme widget:
 ```rust
-ui.add(
-    egui_widget_themenator::ThemeWidget::new()
-        .label("Theme:")
-        .show_labels(false),
+ui.add(ThemeWidget::new().label("Theme selector:"));
 );
 ```
 
 The theme automatically:
-* Add buttons for each theme
-* Applies all Catppuccin color styling
+* Adds an icon indicating light or dark mode
+* Icon is clickable and cycles through themes
+Applies all Catppuccin color styling
 * Switches between light and dark mode
 * Persists the selected theme across restarts
 
