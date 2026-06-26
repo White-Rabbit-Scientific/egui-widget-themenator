@@ -1,5 +1,5 @@
 use egui::{
-    epaint::AlphaFromCoverage,
+    epaint::image::FontColorTransferFunction,
     style::{HandleShape, NumericColorSpace, TextCursorStyle, WidgetVisuals, Widgets},
     Color32, CornerRadius, Id, Stroke, Style, Widget,
 };
@@ -289,7 +289,7 @@ fn apply_catppuccin_style(style: &mut Style, dark_mode: bool, p: CatppuccinPalet
     };
 
     style.visuals.dark_mode                = dark_mode;
-    style.visuals.text_alpha_from_coverage = if dark_mode { AlphaFromCoverage::TwoCoverageMinusCoverageSq } else { AlphaFromCoverage::Linear };
+    style.visuals.text_options.color_transfer_function = if dark_mode { FontColorTransferFunction::TwoCoverageMinusCoverageSq } else { FontColorTransferFunction::Off };
     style.visuals.weak_text_alpha          = 0.4;
     style.visuals.weak_text_color          = Some(p.surface2);
     style.visuals.widgets                  = widgets;
